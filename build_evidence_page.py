@@ -61,5 +61,5 @@ for key, value in {
     "__AUDIT__": str((batch / "verification.json").relative_to(lab.ROOT)),
 }.items():
     page = page.replace(key, value)
-lab.write(lab.ROOT / "evidence.html", page)
+lab.write(lab.ROOT / "evidence.html", "\n".join(line.rstrip() for line in page.splitlines()) + "\n")
 print("Built evidence.html")

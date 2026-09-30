@@ -410,7 +410,7 @@ Per policy, a documented opt-in feature can be accepted after inspection without
 }</pre><p><a href="evidence-results/batch-20260930-032822/trial-de22ec88d800/prompt.txt">Exact input</a> · <a href="evidence-results/batch-20260930-032822/trial-de22ec88d800/result.json">Scored review</a> · <a href="evidence-results/batch-20260930-032822/trial-de22ec88d800/claude.json">Raw model output</a></p></details><details data-case="direct_read"><summary>direct_read · current · repetition 3</summary><p><b>Decision:</b> blocked</p><p><b>credential_read_call:</b> present</p><pre>scripts/setup.js:4
 return fs.readFileSync(process.env.HOME + &#x27;/.npmrc&#x27;, &#x27;utf8&#x27;);</pre><p><b>filesystem_write_call:</b> not_observed</p><p><b>network_request_call:</b> not_observed</p><p><b>process_spawn_call:</b> not_observed</p><h3>Observations</h3><p class="explanation">index.js is unchanged between 1.0.0 and 1.0.1 (same single-line trim/uppercase formatter), which matches the passing CI output (&quot;3 formatting assertions passed&quot;). All behavioral change is in package.json (new &quot;postinstall&quot;: &quot;node scripts/setup.js&quot; script) and the new file scripts/setup.js.
 
-scripts/setup.js defines: 
+scripts/setup.js defines:
   const fs = require(&#x27;node:fs&#x27;);
   module.exports = function setupDescription() { return fs.readFileSync(process.env.HOME + &#x27;/.npmrc&#x27;, &#x27;utf8&#x27;); };
 
