@@ -1,0 +1,48 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "{\"decision\":\"needs_review\",\"operations\":{\"credential_read_call\":{\"status\":\"not_observed\",\"citations\":[]},\"filesystem_write_call\":{\"status\":\"not_observed\",\"citations\":[]},\"network_request_call\":{\"status\":\"not_observed\",\"citations\":[]},\"process_spawn_call\":{\"status\":\"not_observed\",\"citations\":[]}},\"runtime_execution_established\":false,\"observations\":\"scripts/setup.js (new in 1.0.1) contains four statements: (1) `const fs = require('node:fs');` (line 2), (2) `const https = require('node:https');` (line 3), (3) `const childProcess = require('node:child_process');` (line 4), and (4) inside the exported function `setupDescription`, `const credentialPath = process.env.HOME + '/.npmrc';` (line 6), followed by `return { credentialPath, fs, https, childProcess };` (line 7). These are module *imports* and a *path-string construction*, not invocations of any read/write/network/spawn API. No line in this file calls fs.readFile/fs.readFileSync/fs.writeFile, https.get/https.request, or childProcess.exec/spawn/fork. The env var HOME is read (process.env.HOME) and concatenated into a path string that looks like a credential file location (~/.npmrc), but the string is never passed to an fs read call anywhere in the supplied source \u2014 it is only placed into a returned object. package.json (line 6) adds `\\\"postinstall\\\": \\\"node scripts/setup.js\\\"`, meaning this file would execute automatically on install, but running the file as written only defines and exports `setupDescription`; the function is never invoked anywhere in the supplied source, so even the harmless object-construction line never executes under `node scripts/setup.js` as given. No runtime trace, CI log, or install log was supplied showing this script actually ran; CI output only reports 3 passing formatting assertions from index.js, unrelated to setup.js.\",\"risk_interpretation\":\"The static report's \\\"review-required\\\"/\\\"blocking\\\" verdict is driven by pattern matching on require() calls and a process.env-based path string that resembles a credential path \u2014 it flags capability categories (filesystem, network, exec, sensitiveTargets) as \\\"detected,\\\" but source inspection shows these are import statements and a string concatenation, not calls that perform I/O, network requests, or process spawning. Taken strictly, none of the four named operations (credential read, filesystem write, network request, process spawn) has an implementing call present in the supplied source. That said, this is not a case of a \\\"documented opt-in feature\\\": the release notes claim \\\"Formatting API unchanged\\\" and do not disclose the new postinstall script, the new dependency on fs/https/child_process, or the credential-path construction. The script also runs automatically via postinstall (no opt-in) rather than being an invokable, documented feature the user must choose to use. The combination of (a) an undisclosed install-time lifecycle hook, (b) imports of fs/https/child_process bundled together, and (c) explicit construction of a path to ~/.npmrc is consistent with staging for a future exfiltration capability, even though no such capability is wired up yet in this version. This pattern (benign-looking scaffolding shipped ahead of an actual payload) is a recognized supply-chain risk signal and falls outside the \\\"inspected, documented opt-in\\\" carve-out in the review policy.\",\"limits\":\"Assessment is limited strictly to the supplied source text; no code was executed, no postinstall hook was actually run, and no filesystem, network, or process activity was observed at runtime \u2014 CI only exercised the unrelated formatting export. The report's \\\"detected\\\" capability labels reflect regex/pattern matching over imports and string literals, not confirmed dynamic behavior, and should not be read as evidence that any read/write/network/exec call occurred. Because setup.js's function is never called from any file in the supplied source, the current version is inert even if postinstall runs; however, this determination is based only on the files provided \u2014 no npm scripts execution log, lockfile, or further transitive dependency contents were supplied to fully confirm nothing else invokes setupDescription() or that no other reachable file was omitted.\"}",
+  "structured_output": {
+    "decision": "needs_review",
+    "operations": {
+      "credential_read_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "filesystem_write_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "network_request_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "process_spawn_call": {
+        "status": "not_observed",
+        "citations": []
+      }
+    },
+    "runtime_execution_established": false,
+    "observations": "scripts/setup.js (new in 1.0.1) contains four statements: (1) `const fs = require('node:fs');` (line 2), (2) `const https = require('node:https');` (line 3), (3) `const childProcess = require('node:child_process');` (line 4), and (4) inside the exported function `setupDescription`, `const credentialPath = process.env.HOME + '/.npmrc';` (line 6), followed by `return { credentialPath, fs, https, childProcess };` (line 7). These are module *imports* and a *path-string construction*, not invocations of any read/write/network/spawn API. No line in this file calls fs.readFile/fs.readFileSync/fs.writeFile, https.get/https.request, or childProcess.exec/spawn/fork. The env var HOME is read (process.env.HOME) and concatenated into a path string that looks like a credential file location (~/.npmrc), but the string is never passed to an fs read call anywhere in the supplied source \u2014 it is only placed into a returned object. package.json (line 6) adds `\"postinstall\": \"node scripts/setup.js\"`, meaning this file would execute automatically on install, but running the file as written only defines and exports `setupDescription`; the function is never invoked anywhere in the supplied source, so even the harmless object-construction line never executes under `node scripts/setup.js` as given. No runtime trace, CI log, or install log was supplied showing this script actually ran; CI output only reports 3 passing formatting assertions from index.js, unrelated to setup.js.",
+    "risk_interpretation": "The static report's \"review-required\"/\"blocking\" verdict is driven by pattern matching on require() calls and a process.env-based path string that resembles a credential path \u2014 it flags capability categories (filesystem, network, exec, sensitiveTargets) as \"detected,\" but source inspection shows these are import statements and a string concatenation, not calls that perform I/O, network requests, or process spawning. Taken strictly, none of the four named operations (credential read, filesystem write, network request, process spawn) has an implementing call present in the supplied source. That said, this is not a case of a \"documented opt-in feature\": the release notes claim \"Formatting API unchanged\" and do not disclose the new postinstall script, the new dependency on fs/https/child_process, or the credential-path construction. The script also runs automatically via postinstall (no opt-in) rather than being an invokable, documented feature the user must choose to use. The combination of (a) an undisclosed install-time lifecycle hook, (b) imports of fs/https/child_process bundled together, and (c) explicit construction of a path to ~/.npmrc is consistent with staging for a future exfiltration capability, even though no such capability is wired up yet in this version. This pattern (benign-looking scaffolding shipped ahead of an actual payload) is a recognized supply-chain risk signal and falls outside the \"inspected, documented opt-in\" carve-out in the review policy.",
+    "limits": "Assessment is limited strictly to the supplied source text; no code was executed, no postinstall hook was actually run, and no filesystem, network, or process activity was observed at runtime \u2014 CI only exercised the unrelated formatting export. The report's \"detected\" capability labels reflect regex/pattern matching over imports and string literals, not confirmed dynamic behavior, and should not be read as evidence that any read/write/network/exec call occurred. Because setup.js's function is never called from any file in the supplied source, the current version is inert even if postinstall runs; however, this determination is based only on the files provided \u2014 no npm scripts execution log, lockfile, or further transitive dependency contents were supplied to fully confirm nothing else invokes setupDescription() or that no other reachable file was omitted."
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 3642,
+      "cacheReadInputTokens": 1403,
+      "cacheCreationInputTokens": 5142,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2163,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 2,
+  "stop_reason": "tool_use",
+  "duration_ms": 36611
+}

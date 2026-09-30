@@ -1,0 +1,48 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "{\"decision\":\"ready\",\"operations\":{\"credential_read_call\":{\"status\":\"not_observed\",\"citations\":[]},\"filesystem_write_call\":{\"status\":\"not_observed\",\"citations\":[]},\"network_request_call\":{\"status\":\"not_observed\",\"citations\":[]},\"process_spawn_call\":{\"status\":\"not_observed\",\"citations\":[]}},\"runtime_execution_established\":false,\"observations\":\"The full proposed source for index.js (5 lines) and package.json (5 lines) was supplied and reviewed in entirety. The only functional change is a refactor of the exported `format` function: the previous one-line arrow expression `exports.format = value => String(value).trim().toUpperCase();` (before, line 2) was rewritten as a block body that assigns to an intermediate `text` variable before calling `.trim().toUpperCase()`:\\n- proposed index.js line 2: \\\\\\\"exports.format = value => {\\\\\\\"\\n- proposed index.js line 3: \\\\\\\"const text = String(value);\\\\\\\"\\n- proposed index.js line 4: \\\\\\\"return text.trim().toUpperCase();\\\\\\\"\\n- proposed index.js line 5: \\\\\\\"};\\\\\\\"\\n\\nNo import statements, no references to filesystem, network, child_process, or credential-file paths appear anywhere in the two-line-to-five-line diff. There is no code path in the supplied source that reads a file (credential or otherwise), writes to the filesystem, makes a network request, or spawns a process \u2014 the entire module surface is a single pure string-transformation function with no external module usage (no `require(...)` calls at all, in either version). Version bump in package.json (1.0.0 -> 1.0.1) is the only other change, consistent with a patch-level internal refactor per the release notes.\\n\\nThe static scanner report corroborates this: `capabilities: []`, `newRiskFlags: []`, `changes: []`, `evidence: []`, `sourceContext.matches: []`, `installContext.hooks: []`, `wouldFail: false`, `blocking: false`, `requiresApproval: false`, state `informational`. Coverage was complete (filesDiscovered: 1, filesRead: 1, errorCount: 0, sourceCoverageComplete: true), so the empty findings are not due to partial scanning of this package. CI shows exit_code 0 with 3 formatting assertions passing, confirming the refactor preserves the documented API/behavior for the tested inputs (no new opt-in feature is introduced here, unlike the review-policy note about opt-in features, which does not appear applicable to this trivial diff).\\\"\",\"risk_interpretation\":\"This is a minimal, behavior-preserving internal refactor (introducing a named intermediate variable) with no new imports, no new capabilities, and no code touching credentials, the filesystem, the network, or process spawning. The scanner's line-level heuristic coverage is inherently limited (misses aliases/wrappers/computed property access), but here the entire source is only 5 short lines with zero `require`/`import` statements, so there is effectively no surface for hidden aliasing to hide additional calls \u2014 the absence of matches is well corroborated by direct manual reading of the complete file, not solely by the scanner's absence-of-evidence. Risk is assessed as low: the diff is fully auditable, small, and matches the stated release-note intent (internal refactor, same API).\",\"limits\":\"No runtime execution or dynamic trace was supplied or performed; all conclusions are based on static reading of the given source diff, the CI pass/fail summary, and the static scanner report. The scanner's own stated method is line-level literal-pattern hints, not a full parser or data-flow engine, and can miss aliases, computed properties, or wrapper indirection \u2014 however this limitation was mitigated here by manually inspecting the complete (very short) source rather than relying on scanner output alone. Passing CI tests only demonstrate that 3 existing formatting assertions still hold for whatever inputs they exercise; they do not constitute proof of the absence of any operation, nor do they establish that this code has been executed in any deployment or production context. No claim is made that any operation actually ran \u2014 only that no call implementing credential-read, filesystem-write, network-request, or process-spawn operations is present in the supplied source.\"}",
+  "structured_output": {
+    "decision": "ready",
+    "operations": {
+      "credential_read_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "filesystem_write_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "network_request_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "process_spawn_call": {
+        "status": "not_observed",
+        "citations": []
+      }
+    },
+    "runtime_execution_established": false,
+    "observations": "The full proposed source for index.js (5 lines) and package.json (5 lines) was supplied and reviewed in entirety. The only functional change is a refactor of the exported `format` function: the previous one-line arrow expression `exports.format = value => String(value).trim().toUpperCase();` (before, line 2) was rewritten as a block body that assigns to an intermediate `text` variable before calling `.trim().toUpperCase()`:\n- proposed index.js line 2: \\\"exports.format = value => {\\\"\n- proposed index.js line 3: \\\"const text = String(value);\\\"\n- proposed index.js line 4: \\\"return text.trim().toUpperCase();\\\"\n- proposed index.js line 5: \\\"};\\\"\n\nNo import statements, no references to filesystem, network, child_process, or credential-file paths appear anywhere in the two-line-to-five-line diff. There is no code path in the supplied source that reads a file (credential or otherwise), writes to the filesystem, makes a network request, or spawns a process \u2014 the entire module surface is a single pure string-transformation function with no external module usage (no `require(...)` calls at all, in either version). Version bump in package.json (1.0.0 -> 1.0.1) is the only other change, consistent with a patch-level internal refactor per the release notes.\n\nThe static scanner report corroborates this: `capabilities: []`, `newRiskFlags: []`, `changes: []`, `evidence: []`, `sourceContext.matches: []`, `installContext.hooks: []`, `wouldFail: false`, `blocking: false`, `requiresApproval: false`, state `informational`. Coverage was complete (filesDiscovered: 1, filesRead: 1, errorCount: 0, sourceCoverageComplete: true), so the empty findings are not due to partial scanning of this package. CI shows exit_code 0 with 3 formatting assertions passing, confirming the refactor preserves the documented API/behavior for the tested inputs (no new opt-in feature is introduced here, unlike the review-policy note about opt-in features, which does not appear applicable to this trivial diff).\"",
+    "risk_interpretation": "This is a minimal, behavior-preserving internal refactor (introducing a named intermediate variable) with no new imports, no new capabilities, and no code touching credentials, the filesystem, the network, or process spawning. The scanner's line-level heuristic coverage is inherently limited (misses aliases/wrappers/computed property access), but here the entire source is only 5 short lines with zero `require`/`import` statements, so there is effectively no surface for hidden aliasing to hide additional calls \u2014 the absence of matches is well corroborated by direct manual reading of the complete file, not solely by the scanner's absence-of-evidence. Risk is assessed as low: the diff is fully auditable, small, and matches the stated release-note intent (internal refactor, same API).",
+    "limits": "No runtime execution or dynamic trace was supplied or performed; all conclusions are based on static reading of the given source diff, the CI pass/fail summary, and the static scanner report. The scanner's own stated method is line-level literal-pattern hints, not a full parser or data-flow engine, and can miss aliases, computed properties, or wrapper indirection \u2014 however this limitation was mitigated here by manually inspecting the complete (very short) source rather than relying on scanner output alone. Passing CI tests only demonstrate that 3 existing formatting assertions still hold for whatever inputs they exercise; they do not constitute proof of the absence of any operation, nor do they establish that this code has been executed in any deployment or production context. No claim is made that any operation actually ran \u2014 only that no call implementing credential-read, filesystem-write, network-request, or process-spawn operations is present in the supplied source."
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 1605,
+      "cacheReadInputTokens": 1403,
+      "cacheCreationInputTokens": 2791,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 111,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 2,
+  "stop_reason": "tool_use",
+  "duration_ms": 16489
+}

@@ -1,0 +1,1 @@
+const a=require('node:assert/strict');const {format}=require('./node_modules/format-label');a.equal(format(' hello '),'HELLO');a.equal(format(42),'42');a.equal(format(''),'');console.log('3 formatting assertions passed');

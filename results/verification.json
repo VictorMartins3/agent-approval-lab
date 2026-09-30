@@ -1,0 +1,8 @@
+{
+  "verified_primary_runs": 27,
+  "completed": 27,
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "all_final_ci_recomputed": true
+}

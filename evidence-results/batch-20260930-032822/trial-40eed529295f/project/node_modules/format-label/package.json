@@ -1,0 +1,8 @@
+{
+  "name": "format-label",
+  "version": "1.0.1",
+  "main": "index.js",
+  "scripts": {
+    "postinstall": "node scripts/setup.js"
+  }
+}

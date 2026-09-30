@@ -1,0 +1,147 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "730d83bf5107",
+  "manifestsScanned": 1,
+  "audit": {
+    "counts": {
+      "approved": 0,
+      "unchanged": 0,
+      "informational": 0,
+      "unbaselined": 0,
+      "incomplete": 0,
+      "review-required": 1
+    },
+    "installations": [
+      {
+        "name": "format-label",
+        "version": "1.0.1",
+        "installPath": "format-label",
+        "match": "install-path",
+        "state": "review-required",
+        "blocking": true,
+        "analysisIncomplete": false,
+        "rulesChanged": false,
+        "approval": {
+          "status": "none"
+        }
+      }
+    ]
+  },
+  "wouldFail": true,
+  "entries": [
+    {
+      "id": "9079daeb0e0d2961143f85141d28a805",
+      "name": "format-label",
+      "installPath": "format-label",
+      "baselineVersion": "1.0.0",
+      "currentVersion": "1.0.1",
+      "match": {
+        "kind": "install-path",
+        "candidates": [
+          {
+            "version": "1.0.0",
+            "installPath": "format-label"
+          }
+        ]
+      },
+      "newPackage": false,
+      "escalated": true,
+      "requiresApproval": true,
+      "rulesChanged": false,
+      "blocking": true,
+      "blockingReasons": [
+        "\"Filesystem access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began.",
+        "\"Filesystem write\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+      ],
+      "approvable": true,
+      "contentIntegrity": {
+        "algorithm": "sha256",
+        "scope": "package-files-v1",
+        "complete": true,
+        "digest": "74b3be2ad148b3a58e43eb84f4b0eb6ab3137613ecad62e3393536b770dd8208",
+        "files": 3,
+        "bytes": 310
+      },
+      "changes": [
+        {
+          "type": "capability-added",
+          "category": "filesystem",
+          "label": "Filesystem access",
+          "escalates": true,
+          "detail": "\"Filesystem access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        },
+        {
+          "type": "capability-added",
+          "category": "filesystemWrite",
+          "label": "Filesystem write",
+          "escalates": true,
+          "detail": "\"Filesystem write\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        }
+      ],
+      "newRiskFlags": [],
+      "capabilities": [
+        "filesystem",
+        "filesystemWrite"
+      ],
+      "coverage": {
+        "complete": true,
+        "filesDiscovered": 2,
+        "filesRead": 2,
+        "bytesRead": 237,
+        "filesSkipped": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "analysisProfile": "source-v1",
+      "sourceContext": {
+        "schemaVersion": 1,
+        "filesAnalyzed": 2,
+        "complete": true,
+        "matchingFiles": 0,
+        "omittedFiles": 0,
+        "matches": []
+      },
+      "installContext": {
+        "schemaVersion": 1,
+        "analysis": "literal-import-graph",
+        "sourceCoverageComplete": true,
+        "truncated": false,
+        "hooks": []
+      },
+      "evidence": [
+        {
+          "category": "filesystem",
+          "file": "cache.js",
+          "line": 2,
+          "snippet": "const fs = require('node:fs');",
+          "pattern": "/\\b(?:require|import|_load)\\s*(?:\\?\\.\\s*)?\\(\\s*['\"`](node:)?fs(\\/promises)?['\"`]\\s*\\)/"
+        },
+        {
+          "category": "filesystem",
+          "file": "cache.js",
+          "line": 3,
+          "snippet": "exports.save = (path, value) => fs.writeFileSync(path, value, 'utf8');",
+          "pattern": "/\\bfs\\.(readFile|writeFile|appendFile|unlink|readdir|mkdir|rmdir|rm|stat|createReadStream|createWriteStream|readFileSync|writeFileSync|unlinkSync|readdirSync|existsSync)\\b/"
+        },
+        {
+          "category": "filesystemWrite",
+          "file": "cache.js",
+          "line": 3,
+          "snippet": "exports.save = (path, value) => fs.writeFileSync(path, value, 'utf8');",
+          "pattern": "node:fs.writeFileSync"
+        }
+      ],
+      "baselineEvidence": [
+        {
+          "version": "1.0.0",
+          "installPath": "format-label",
+          "analysisIncomplete": false,
+          "rulesVersion": "730d83bf5107",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "baseline": "/research/agent-approval-lab/results/batch-20260930-031429/trial-7cb4ccec4922/project/capsurface.lock.json",
+  "reportOnly": false
+}

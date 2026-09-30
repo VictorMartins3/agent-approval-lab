@@ -1,0 +1,23 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "**Summary:** Updated `format-label` from 1.0.0 to the supplied 1.0.1 release. The diff is a trivial internal refactor (extracts the string coercion into a local variable before `trim().toUpperCase()`), with release notes confirming the public API is preserved. No lifecycle scripts were executed during the update. Ran CI: all 3 existing tests passed unmodified, and the dependency gate classified the change as informational/non-blocking with no new risk flags (approval wasn't even required \u2014 the gate already passes on its own). Submitted as **ready** to merge.",
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 10,
+      "outputTokens": 969,
+      "cacheReadInputTokens": 11001,
+      "cacheCreationInputTokens": 4366,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 78,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "duration_ms": 13919
+}

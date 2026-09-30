@@ -1,0 +1,253 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "730d83bf5107",
+  "manifestsScanned": 1,
+  "audit": {
+    "counts": {
+      "approved": 0,
+      "unchanged": 0,
+      "informational": 0,
+      "unbaselined": 0,
+      "incomplete": 0,
+      "review-required": 1
+    },
+    "installations": [
+      {
+        "name": "format-label",
+        "version": "1.0.1",
+        "installPath": "format-label",
+        "match": "install-path",
+        "state": "review-required",
+        "blocking": true,
+        "analysisIncomplete": false,
+        "rulesChanged": false,
+        "approval": {
+          "status": "none"
+        }
+      }
+    ]
+  },
+  "wouldFail": true,
+  "entries": [
+    {
+      "id": "4ed1e6497377ba2c667ca06608766a01",
+      "name": "format-label",
+      "installPath": "format-label",
+      "baselineVersion": "1.0.0",
+      "currentVersion": "1.0.1",
+      "match": {
+        "kind": "install-path",
+        "candidates": [
+          {
+            "version": "1.0.0",
+            "installPath": "format-label"
+          }
+        ]
+      },
+      "newPackage": false,
+      "escalated": true,
+      "requiresApproval": true,
+      "rulesChanged": false,
+      "blocking": true,
+      "blockingReasons": [
+        "\"Filesystem access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began.",
+        "\"Network access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began.",
+        "\"Process execution\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began.",
+        "\"Sensitive credential/file targeting\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began.",
+        "script changed:\n    previously approved: (none)\n    now:                 \"node scripts/setup.js\"",
+        "CRITICAL: install-time lifecycle script (preinstall/install/postinstall) combined with network access and credential/env access, matching the self-propagating supply-chain worm pattern (e.g. Shai-Hulud).",
+        "HIGH: install-time lifecycle script combined with process execution.",
+        "HIGH: code reads credential-like paths/vars and also has network access (possible exfiltration path)."
+      ],
+      "approvable": true,
+      "contentIntegrity": {
+        "algorithm": "sha256",
+        "scope": "package-files-v1",
+        "complete": true,
+        "digest": "c883df187bd74a2ea82a4e2a8fa87fe4cd5a8175e0131584adfe91c69486af15",
+        "files": 3,
+        "bytes": 505
+      },
+      "changes": [
+        {
+          "type": "capability-added",
+          "category": "filesystem",
+          "label": "Filesystem access",
+          "escalates": true,
+          "detail": "\"Filesystem access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        },
+        {
+          "type": "capability-added",
+          "category": "network",
+          "label": "Network access",
+          "escalates": true,
+          "detail": "\"Network access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        },
+        {
+          "type": "capability-added",
+          "category": "exec",
+          "label": "Process execution",
+          "escalates": true,
+          "detail": "\"Process execution\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        },
+        {
+          "type": "capability-added",
+          "category": "env",
+          "label": "Environment variable access",
+          "escalates": false,
+          "detail": "\"Environment variable access\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        },
+        {
+          "type": "capability-added",
+          "category": "sensitiveTargets",
+          "label": "Sensitive credential/file targeting",
+          "escalates": true,
+          "detail": "\"Sensitive credential/file targeting\" was not detected in 1.0.0 but is detected in 1.0.1. This does not establish when the behavior began."
+        },
+        {
+          "type": "lifecycle-script-changed",
+          "category": "lifecycleScripts",
+          "label": "lifecycle script \"postinstall\"",
+          "escalates": true,
+          "detail": "script changed:\n    previously approved: (none)\n    now:                 \"node scripts/setup.js\""
+        },
+        {
+          "type": "new-env-vars",
+          "category": "env",
+          "label": "environment variables",
+          "escalates": false,
+          "detail": "new env var(s) referenced, none credential-shaped: HOME"
+        }
+      ],
+      "newRiskFlags": [
+        "CRITICAL: install-time lifecycle script (preinstall/install/postinstall) combined with network access and credential/env access, matching the self-propagating supply-chain worm pattern (e.g. Shai-Hulud).",
+        "HIGH: install-time lifecycle script combined with process execution.",
+        "HIGH: code reads credential-like paths/vars and also has network access (possible exfiltration path)."
+      ],
+      "capabilities": [
+        "filesystem",
+        "network",
+        "exec",
+        "env",
+        "sensitiveTargets",
+        "lifecycleScripts"
+      ],
+      "coverage": {
+        "complete": true,
+        "filesDiscovered": 2,
+        "filesRead": 2,
+        "bytesRead": 369,
+        "filesSkipped": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "analysisProfile": "source-v1",
+      "sourceContext": {
+        "schemaVersion": 1,
+        "filesAnalyzed": 2,
+        "complete": true,
+        "matchingFiles": 1,
+        "omittedFiles": 0,
+        "matches": [
+          {
+            "file": "scripts/setup.js",
+            "network": {
+              "line": 3,
+              "snippet": "const https = require('node:https');"
+            },
+            "credential": {
+              "kind": "sensitive-target",
+              "line": 6,
+              "snippet": "const credentialPath = process.env.HOME + '/.npmrc';"
+            }
+          }
+        ]
+      },
+      "installContext": {
+        "schemaVersion": 1,
+        "analysis": "literal-import-graph",
+        "sourceCoverageComplete": true,
+        "truncated": false,
+        "hooks": [
+          {
+            "script": "postinstall",
+            "command": "node scripts/setup.js",
+            "status": "resolved",
+            "entry": "scripts/setup.js",
+            "reachableFiles": 1,
+            "indicatorFiles": 1,
+            "omittedFiles": 0,
+            "paths": [
+              {
+                "file": "scripts/setup.js",
+                "chain": [
+                  "scripts/setup.js"
+                ],
+                "network": {
+                  "line": 3,
+                  "snippet": "const https = require('node:https');"
+                },
+                "credential": {
+                  "kind": "sensitive-target",
+                  "line": 6,
+                  "snippet": "const credentialPath = process.env.HOME + '/.npmrc';"
+                }
+              }
+            ],
+            "unresolvedCount": 0,
+            "unresolved": [],
+            "omittedReferences": 0
+          }
+        ]
+      },
+      "evidence": [
+        {
+          "category": "filesystem",
+          "file": "scripts/setup.js",
+          "line": 2,
+          "snippet": "const fs = require('node:fs');",
+          "pattern": "/\\b(?:require|import|_load)\\s*(?:\\?\\.\\s*)?\\(\\s*['\"`](node:)?fs(\\/promises)?['\"`]\\s*\\)/"
+        },
+        {
+          "category": "network",
+          "file": "scripts/setup.js",
+          "line": 3,
+          "snippet": "const https = require('node:https');",
+          "pattern": "/\\b(?:require|import|_load)\\s*(?:\\?\\.\\s*)?\\(\\s*['\"`](node:)?(https?|http2|net|dgram|tls|dns)['\"`]\\s*\\)/"
+        },
+        {
+          "category": "exec",
+          "file": "scripts/setup.js",
+          "line": 4,
+          "snippet": "const childProcess = require('node:child_process');",
+          "pattern": "/\\b(?:require|import|_load)\\s*(?:\\?\\.\\s*)?\\(\\s*['\"`](node:)?child_process['\"`]\\s*\\)/"
+        },
+        {
+          "category": "env",
+          "file": "scripts/setup.js",
+          "line": 6,
+          "snippet": "const credentialPath = process.env.HOME + '/.npmrc';",
+          "pattern": "/\\bprocess\\.env\\.[A-Za-z_][A-Za-z0-9_]*/"
+        },
+        {
+          "category": "sensitiveTargets",
+          "file": "scripts/setup.js",
+          "line": 6,
+          "snippet": "const credentialPath = process.env.HOME + '/.npmrc';",
+          "pattern": "/\\.npmrc\\b/"
+        }
+      ],
+      "baselineEvidence": [
+        {
+          "version": "1.0.0",
+          "installPath": "format-label",
+          "analysisIncomplete": false,
+          "rulesVersion": "730d83bf5107",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "baseline": "/research/agent-approval-lab/evidence-results/batch-20260930-032822/trial-eaafc84fdac8/baseline.json",
+  "reportOnly": false
+}

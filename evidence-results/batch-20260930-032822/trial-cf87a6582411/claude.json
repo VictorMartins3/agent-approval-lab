@@ -1,0 +1,54 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "{\"decision\":\"blocked\",\"operations\":{\"credential_read_call\":{\"status\":\"present\",\"citations\":[{\"file\":\"scripts/setup.js\",\"line\":4,\"quote\":\"return fs['read' + 'FileSync'](process.env.HOME + '/.npmrc', 'utf8');\"}]},\"filesystem_write_call\":{\"status\":\"not_observed\",\"citations\":[]},\"network_request_call\":{\"status\":\"not_observed\",\"citations\":[]},\"process_spawn_call\":{\"status\":\"not_observed\",\"citations\":[]}},\"runtime_execution_established\":false,\"observations\":\"The 1.0.1 diff is not limited to a version bump: it adds a postinstall lifecycle hook (\\\"node scripts/setup.js\\\") and a new file scripts/setup.js. That file requires node:fs (line 2) and defines an exported function, setupDescription, whose body (line 4) builds a path from process.env.HOME concatenated with '/.npmrc' and reads it with fs.readFileSync \u2014 obfuscated as fs['read' + 'FileSync'](...) rather than a direct fs.readFileSync(...) call. This is a file-read call that targets a real credential-bearing file (.npmrc commonly stores npm registry auth tokens), so I classify credential_read_call as present, cited at scripts/setup.js line 4. The call sits inside an exported function that is never invoked anywhere in the supplied source (module.exports = function... with no self-invocation), so per the stated rule it still counts as 'present in source' even though nothing in the supplied files calls it. I found no fs write calls (no writeFileSync/appendFile/etc.), no outbound network primitives (no require('http'/'https'), no fetch/axios/net.connect), and no child_process spawn/exec calls anywhere in the proposed source, so filesystem_write_call, network_request_call, and process_spawn_call are all not_observed. Note the postinstall directive itself in package.json is an npm lifecycle-hook declaration, not a source-level process-spawn call, so it does not satisfy process_spawn_call as defined. The existing formatting tests (index.js) are untouched and CI passing 3 assertions says nothing about this new file, since no test exercises scripts/setup.js or its exported function. The static report independently confirms: new filesystem, env, and sensitiveTargets capabilities, a changed/added postinstall script, and flags the release as blocking/review-required with no prior approval baseline for this script.\\\"\",\"risk_interpretation\":\"The change adds an undocumented postinstall script that, when its exported function is eventually invoked, reads the user's .npmrc file \u2014 a well-known location for npm authentication tokens \u2014 using string-concatenation obfuscation (fs['read'+'FileSync']) rather than a plain, greppable fs.readFileSync call. This is a classic pattern used to evade naive static scanners looking for literal 'readFileSync' or '.npmrc' strings, and the static report's own sensitive-target detector still caught it. Critically, the release notes state 'Maintenance release. Formatting API unchanged,' which is a direct misrepresentation: this is not a documented opt-in feature the reviewer can inspect and knowingly accept under the stated policy carve-out \u2014 it is an undisclosed capability whose only apparent purpose is to obtain the contents of a credential file, with no legitimate connection to a string-formatting utility. The absence of an observed network call or write call does not neutralize the risk: the function returns the file's contents to its caller, meaning any code path (present or future) that invokes setupDescription() would obtain the raw .npmrc contents, and a harmless-looking follow-up patch could add exfiltration without appearing as a new 'network' capability change against this baseline. Combined with the postinstall auto-execution vector (which runs on every install without user action) and the mismatch between release notes and actual behavior, this pattern is consistent with a staged supply-chain credential-harvesting attempt rather than an innocuous new feature.\",\"limits\":\"No runtime trace, install log, or execution transcript was supplied \u2014 I cannot and do not claim that scripts/setup.js, its postinstall hook, or the setupDescription function actually executed. CI output only reflects 3 formatting assertions on index.js and provides no coverage of the new script. All conclusions above are based solely on static reading of the provided source diff and the accompanying static-analysis report; I did not execute, simulate, or trace any code. 'Present in source' reflects only that a matching call exists in the text of scripts/setup.js, not that it has run or will run under any given install. I have not attempted to determine whether HOME/.npmrc exists or what it would contain in any real environment, and I make no assertion about actual credential exposure having occurred.\"}",
+  "structured_output": {
+    "decision": "blocked",
+    "operations": {
+      "credential_read_call": {
+        "status": "present",
+        "citations": [
+          {
+            "file": "scripts/setup.js",
+            "line": 4,
+            "quote": "return fs['read' + 'FileSync'](process.env.HOME + '/.npmrc', 'utf8');"
+          }
+        ]
+      },
+      "filesystem_write_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "network_request_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "process_spawn_call": {
+        "status": "not_observed",
+        "citations": []
+      }
+    },
+    "runtime_execution_established": false,
+    "observations": "The 1.0.1 diff is not limited to a version bump: it adds a postinstall lifecycle hook (\"node scripts/setup.js\") and a new file scripts/setup.js. That file requires node:fs (line 2) and defines an exported function, setupDescription, whose body (line 4) builds a path from process.env.HOME concatenated with '/.npmrc' and reads it with fs.readFileSync \u2014 obfuscated as fs['read' + 'FileSync'](...) rather than a direct fs.readFileSync(...) call. This is a file-read call that targets a real credential-bearing file (.npmrc commonly stores npm registry auth tokens), so I classify credential_read_call as present, cited at scripts/setup.js line 4. The call sits inside an exported function that is never invoked anywhere in the supplied source (module.exports = function... with no self-invocation), so per the stated rule it still counts as 'present in source' even though nothing in the supplied files calls it. I found no fs write calls (no writeFileSync/appendFile/etc.), no outbound network primitives (no require('http'/'https'), no fetch/axios/net.connect), and no child_process spawn/exec calls anywhere in the proposed source, so filesystem_write_call, network_request_call, and process_spawn_call are all not_observed. Note the postinstall directive itself in package.json is an npm lifecycle-hook declaration, not a source-level process-spawn call, so it does not satisfy process_spawn_call as defined. The existing formatting tests (index.js) are untouched and CI passing 3 assertions says nothing about this new file, since no test exercises scripts/setup.js or its exported function. The static report independently confirms: new filesystem, env, and sensitiveTargets capabilities, a changed/added postinstall script, and flags the release as blocking/review-required with no prior approval baseline for this script.\"",
+    "risk_interpretation": "The change adds an undocumented postinstall script that, when its exported function is eventually invoked, reads the user's .npmrc file \u2014 a well-known location for npm authentication tokens \u2014 using string-concatenation obfuscation (fs['read'+'FileSync']) rather than a plain, greppable fs.readFileSync call. This is a classic pattern used to evade naive static scanners looking for literal 'readFileSync' or '.npmrc' strings, and the static report's own sensitive-target detector still caught it. Critically, the release notes state 'Maintenance release. Formatting API unchanged,' which is a direct misrepresentation: this is not a documented opt-in feature the reviewer can inspect and knowingly accept under the stated policy carve-out \u2014 it is an undisclosed capability whose only apparent purpose is to obtain the contents of a credential file, with no legitimate connection to a string-formatting utility. The absence of an observed network call or write call does not neutralize the risk: the function returns the file's contents to its caller, meaning any code path (present or future) that invokes setupDescription() would obtain the raw .npmrc contents, and a harmless-looking follow-up patch could add exfiltration without appearing as a new 'network' capability change against this baseline. Combined with the postinstall auto-execution vector (which runs on every install without user action) and the mismatch between release notes and actual behavior, this pattern is consistent with a staged supply-chain credential-harvesting attempt rather than an innocuous new feature.",
+    "limits": "No runtime trace, install log, or execution transcript was supplied \u2014 I cannot and do not claim that scripts/setup.js, its postinstall hook, or the setupDescription function actually executed. CI output only reflects 3 formatting assertions on index.js and provides no coverage of the new script. All conclusions above are based solely on static reading of the provided source diff and the accompanying static-analysis report; I did not execute, simulate, or trace any code. 'Present in source' reflects only that a matching call exists in the text of scripts/setup.js, not that it has run or will run under any given install. I have not attempted to determine whether HOME/.npmrc exists or what it would contain in any real environment, and I make no assertion about actual credential exposure having occurred."
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 3941,
+      "cacheReadInputTokens": 1403,
+      "cacheCreationInputTokens": 4066,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 2212,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 2,
+  "stop_reason": "tool_use",
+  "duration_ms": 40457
+}

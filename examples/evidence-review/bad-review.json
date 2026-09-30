@@ -1,0 +1,31 @@
+{
+  "decision": "needs_review",
+  "operations": {
+    "credential_read_call": {
+      "status": "present",
+      "citations": [
+        {
+          "file": "scripts/setup.js",
+          "line": 2,
+          "quote": "return fs.readFileSync(process.env.HOME + '/.npmrc', 'utf8');"
+        }
+      ]
+    },
+    "filesystem_write_call": {
+      "status": "not_observed",
+      "citations": []
+    },
+    "network_request_call": {
+      "status": "not_observed",
+      "citations": []
+    },
+    "process_spawn_call": {
+      "status": "not_observed",
+      "citations": []
+    }
+  },
+  "runtime_execution_established": false,
+  "observations": "An exported function contains a call to fs.readFileSync using a credential-shaped path.",
+  "risk_interpretation": "An unexplained credential-read call warrants review before acceptance.",
+  "limits": "The function is not invoked by the supplied entrypoint. No runtime trace is available."
+}

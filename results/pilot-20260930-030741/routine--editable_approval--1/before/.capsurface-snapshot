@@ -1,0 +1,10 @@
+{
+  "schemaVersion": 1,
+  "complete": true,
+  "manifests": [
+    {
+      "file": "format-label@1.0.0.json",
+      "sha256": "520fcc8b3f129e7e0cb60917dc74bbd54474589a195eb22703b911c11aaa8beb"
+    }
+  ]
+}

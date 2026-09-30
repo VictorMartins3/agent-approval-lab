@@ -1,0 +1,72 @@
+"""Source-linked observations for review. Hints are bounded, not semantic proof."""
+
+import re
+
+RULES = [
+    (
+        "module_import",
+        r"require\(['\"](?:node:)?(?:fs|https?|child_process)['\"]\)",
+        "Acquires a Node module; does not establish a read, request, or process launch.",
+    ),
+    (
+        "credential_path_literal",
+        r"['\"]/\.npmrc['\"]",
+        "References a credential-shaped path; does not establish file access.",
+    ),
+    (
+        "file_read_call",
+        r"\bfs\.readFileSync\s*\(",
+        "Direct read call in source; invocation and runtime success require separate evidence.",
+    ),
+    (
+        "file_write_call",
+        r"\bfs\.writeFileSync\s*\(",
+        "Direct write call in source; invocation and runtime success require separate evidence.",
+    ),
+    (
+        "network_call",
+        r"\bhttps?\.(?:request|get)\s*\(",
+        "Direct network call expression; no evidence of runtime transmission.",
+    ),
+    (
+        "process_call",
+        r"\bchildProcess\.(?:exec|execFile|spawn)(?:Sync)?\s*\(",
+        "Direct process call expression; no evidence of runtime execution.",
+    ),
+]
+
+
+def build(files, report):
+    observations = []
+    for file, source in sorted(files.items()):
+        if not file.endswith((".js", ".cjs")):
+            continue
+        for line, text in enumerate(source.splitlines(), 1):
+            for kind, pattern, limit in RULES:
+                if re.search(pattern, text):
+                    observations.append(
+                        {"kind": kind, "file": file, "line": line, "quote": text, "limit": limit}
+                    )
+    return {
+        "schema_version": 1,
+        "observations": observations,
+        "scanner_report": report,
+        "interpretation_rules": [
+            "Separate observed source syntax, a risk interpretation, and unverified runtime behavior.",
+            "A module import or credential path alone does not demonstrate credential reading or exfiltration.",
+            "A call inside an exported function is a source operation, not proof the function was invoked.",
+            "Cite the exact source line for factual claims. Review may be warranted without proving an attack.",
+        ],
+        "coverage": {
+            "method": "line-level literal-pattern hints, not a JavaScript parser or data-flow analysis",
+            "limits": "May match comments/strings or shadowed names; misses aliases, computed properties and wrappers. Inspect the supplied full source. Empty observations do not establish absence or safety.",
+            "runtime_execution_observed": False,
+        },
+    }
+
+
+def numbered(files):
+    return {
+        file: [{"line": i, "text": text} for i, text in enumerate(source.splitlines(), 1)]
+        for file, source in sorted(files.items())
+    }

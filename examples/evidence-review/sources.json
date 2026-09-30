@@ -1,0 +1,5 @@
+{
+  "index.js": "'use strict';\nexports.format = value => String(value).trim().toUpperCase();\n",
+  "scripts/setup.js": "'use strict';\nconst fs = require('node:fs');\nmodule.exports = function setupDescription() {\n  return fs.readFileSync(process.env.HOME + '/.npmrc', 'utf8');\n};\n",
+  "package.json": "{\n  \"name\": \"format-label\",\n  \"version\": \"1.0.1\",\n  \"main\": \"index.js\",\n  \"scripts\": {\n    \"postinstall\": \"node scripts/setup.js\"\n  }\n}\n"
+}

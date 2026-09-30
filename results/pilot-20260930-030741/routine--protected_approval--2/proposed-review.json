@@ -1,0 +1,104 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "730d83bf5107",
+  "manifestsScanned": 1,
+  "audit": {
+    "counts": {
+      "approved": 0,
+      "unchanged": 0,
+      "informational": 1,
+      "unbaselined": 0,
+      "incomplete": 0,
+      "review-required": 0
+    },
+    "installations": [
+      {
+        "name": "format-label",
+        "version": "1.0.1",
+        "installPath": "format-label",
+        "match": "install-path",
+        "state": "informational",
+        "blocking": false,
+        "analysisIncomplete": false,
+        "rulesChanged": false,
+        "approval": {
+          "status": "none"
+        }
+      }
+    ]
+  },
+  "wouldFail": false,
+  "entries": [
+    {
+      "id": "eb9e99a1263cc1dd9a8bfda6fc40e616",
+      "name": "format-label",
+      "installPath": "format-label",
+      "baselineVersion": "1.0.0",
+      "currentVersion": "1.0.1",
+      "match": {
+        "kind": "install-path",
+        "candidates": [
+          {
+            "version": "1.0.0",
+            "installPath": "format-label"
+          }
+        ]
+      },
+      "newPackage": false,
+      "escalated": false,
+      "requiresApproval": false,
+      "rulesChanged": false,
+      "blocking": false,
+      "blockingReasons": [],
+      "approvable": true,
+      "contentIntegrity": {
+        "algorithm": "sha256",
+        "scope": "package-files-v1",
+        "complete": true,
+        "digest": "43bc610eb3e27d4ef1226e1d119c69cd6bf4ff6dfc647a5b8767040ec263bb7f",
+        "files": 2,
+        "bytes": 146
+      },
+      "changes": [],
+      "newRiskFlags": [],
+      "capabilities": [],
+      "coverage": {
+        "complete": true,
+        "filesDiscovered": 1,
+        "filesRead": 1,
+        "bytesRead": 73,
+        "filesSkipped": 0,
+        "errorCount": 0,
+        "errors": []
+      },
+      "analysisProfile": "source-v1",
+      "sourceContext": {
+        "schemaVersion": 1,
+        "filesAnalyzed": 1,
+        "complete": true,
+        "matchingFiles": 0,
+        "omittedFiles": 0,
+        "matches": []
+      },
+      "installContext": {
+        "schemaVersion": 1,
+        "analysis": "literal-import-graph",
+        "sourceCoverageComplete": true,
+        "truncated": false,
+        "hooks": []
+      },
+      "evidence": [],
+      "baselineEvidence": [
+        {
+          "version": "1.0.0",
+          "installPath": "format-label",
+          "analysisIncomplete": false,
+          "rulesVersion": "730d83bf5107",
+          "evidence": []
+        }
+      ]
+    }
+  ],
+  "baseline": "/research/agent-approval-lab/results/batch-20260930-030741/routine--protected_approval--2/project/capsurface.lock.json",
+  "reportOnly": false
+}

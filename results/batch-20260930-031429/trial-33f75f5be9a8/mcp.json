@@ -1,0 +1,12 @@
+{
+  "mcpServers": {
+    "lab": {
+      "command": "/opt/homebrew/opt/python@3.14/bin/python3.14",
+      "args": [
+        "/research/agent-approval-lab/lab.py",
+        "serve",
+        "/research/agent-approval-lab/results/batch-20260930-031429/trial-33f75f5be9a8"
+      ]
+    }
+  }
+}

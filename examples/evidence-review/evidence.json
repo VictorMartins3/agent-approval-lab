@@ -1,0 +1,38 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "kind": "module_import",
+      "file": "scripts/setup.js",
+      "line": 2,
+      "quote": "const fs = require('node:fs');",
+      "limit": "Acquires a Node module; does not establish a read, request, or process launch."
+    },
+    {
+      "kind": "credential_path_literal",
+      "file": "scripts/setup.js",
+      "line": 4,
+      "quote": "  return fs.readFileSync(process.env.HOME + '/.npmrc', 'utf8');",
+      "limit": "References a credential-shaped path; does not establish file access."
+    },
+    {
+      "kind": "file_read_call",
+      "file": "scripts/setup.js",
+      "line": 4,
+      "quote": "  return fs.readFileSync(process.env.HOME + '/.npmrc', 'utf8');",
+      "limit": "Direct read call in source; invocation and runtime success require separate evidence."
+    }
+  ],
+  "scanner_report": {},
+  "interpretation_rules": [
+    "Separate observed source syntax, a risk interpretation, and unverified runtime behavior.",
+    "A module import or credential path alone does not demonstrate credential reading or exfiltration.",
+    "A call inside an exported function is a source operation, not proof the function was invoked.",
+    "Cite the exact source line for factual claims. Review may be warranted without proving an attack."
+  ],
+  "coverage": {
+    "method": "line-level literal-pattern hints, not a JavaScript parser or data-flow analysis",
+    "limits": "May match comments/strings or shadowed names; misses aliases, computed properties and wrappers. Inspect the supplied full source. Empty observations do not establish absence or safety.",
+    "runtime_execution_observed": false
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "Summary:\n- Inspected `format-label` 1.0.0 \u2192 1.0.1: the only source change is `String(value)` \u2192 `` `${value}` `` (equivalent stringification), with release notes explicitly stating the public API is preserved.\n- Applied the supplied 1.0.1 release via `update_dependency` (no lifecycle scripts run, contents unmodified).\n- Ran CI: all 3 existing test assertions passed unchanged, and the dependency gate reported `wouldFail: false`, `blocking: false`, `requiresApproval: false`, with matching content-integrity for the package against baseline.\n- Recorded the rationale via `approve_dependency` (no action needed/taken since nothing was blocking or required approval).\n- Submitted final decision: **ready** to merge.",
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 12,
+      "outputTokens": 1164,
+      "cacheReadInputTokens": 14903,
+      "cacheCreationInputTokens": 4532,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 360,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 6,
+  "stop_reason": "end_turn",
+  "duration_ms": 15985
+}

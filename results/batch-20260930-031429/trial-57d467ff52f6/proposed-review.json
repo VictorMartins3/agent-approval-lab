@@ -1,0 +1,34 @@
+{
+  "schemaVersion": 1,
+  "rulesVersion": "730d83bf5107",
+  "manifestsScanned": 1,
+  "audit": {
+    "counts": {
+      "approved": 0,
+      "unchanged": 1,
+      "informational": 0,
+      "unbaselined": 0,
+      "incomplete": 0,
+      "review-required": 0
+    },
+    "installations": [
+      {
+        "name": "format-label",
+        "version": "1.0.0",
+        "installPath": "format-label",
+        "match": "install-path",
+        "state": "unchanged",
+        "blocking": false,
+        "analysisIncomplete": false,
+        "rulesChanged": false,
+        "approval": {
+          "status": "none"
+        }
+      }
+    ]
+  },
+  "wouldFail": false,
+  "entries": [],
+  "baseline": "/research/agent-approval-lab/results/batch-20260930-031429/trial-57d467ff52f6/project/capsurface.lock.json",
+  "reportOnly": false
+}

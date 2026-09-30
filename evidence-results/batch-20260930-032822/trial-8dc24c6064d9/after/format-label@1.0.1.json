@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 9,
+  "analysisProfile": "source-v1",
+  "installContext": {
+    "schemaVersion": 1,
+    "analysis": "literal-import-graph",
+    "sourceCoverageComplete": true,
+    "truncated": false,
+    "hooks": [
+      {
+        "script": "postinstall",
+        "command": "node scripts/setup.js",
+        "status": "resolved",
+        "entry": "scripts/setup.js",
+        "reachableFiles": 1,
+        "indicatorFiles": 1,
+        "omittedFiles": 0,
+        "paths": [
+          {
+            "file": "scripts/setup.js",
+            "chain": [
+              "scripts/setup.js"
+            ],
+            "credential": {
+              "kind": "sensitive-target",
+              "line": 4,
+              "snippet": "return fs['read' + 'FileSync'](process.env.HOME + '/.npmrc', 'utf8');"
+            }
+          }
+        ],
+        "unresolvedCount": 0,
+        "unresolved": [],
+        "omittedReferences": 0
+      }
+    ]
+  },
+  "sourceContext": {
+    "schemaVersion": 1,
+    "filesAnalyzed": 2,
+    "complete": true,
+    "matchingFiles": 0,
+    "omittedFiles": 0,
+    "matches": []
+  },
+  "contentIntegrity": {
+    "algorithm": "sha256",
+    "scope": "package-files-v1",
+    "complete": true,
+    "digest": "5f6a822eb9da957e81a73f873f8c2910680b6e547a977ad181250474b9f387b2",
+    "files": 3,
+    "bytes": 379
+  },
+  "rulesVersion": "730d83bf5107",
+  "name": "format-label",
+  "version": "1.0.1",
+  "scannedAt": "2026-09-30T06:32:13.732Z",
+  "sourceFilesScanned": 2,
+  "sourceFilesSkipped": 0,
+  "coverage": {
+    "complete": true,
+    "filesDiscovered": 2,
+    "filesRead": 2,
+    "bytesRead": 243,
+    "filesSkipped": 0,
+    "errorCount": 0,
+    "errors": []
+  },
+  "malformedPackageJson": false,
+  "capabilities": {
+    "filesystem": {
+      "present": true,
+      "evidence": [
+        {
+          "file": "scripts/setup.js",
+          "line": 2,
+          "snippet": "const fs = require('node:fs');",
+          "pattern": "/\\b(?:require|import|_load)\\s*(?:\\?\\.\\s*)?\\(\\s*['\"`](node:)?fs(\\/promises)?['\"`]\\s*\\)/"
+        }
+      ]
+    },
+    "filesystemRead": {
+      "present": false,
+      "evidence": []
+    },
+    "filesystemWrite": {
+      "present": false,
+      "evidence": []
+    },
+    "filesystemRemove": {
+      "present": false,
+      "evidence": []
+    },
+    "network": {
+      "present": false,
+      "evidence": [],
+      "endpoints": []
+    },
+    "networkRequest": {
+      "present": false,
+      "evidence": []
+    },
+    "networkConnect": {
+      "present": false,
+      "evidence": []
+    },
+    "networkServer": {
+      "present": false,
+      "evidence": []
+    },
+    "networkDns": {
+      "present": false,
+      "evidence": []
+    },
+    "networkSocket": {
+      "present": false,
+      "evidence": []
+    },
+    "exec": {
+      "present": false,
+      "evidence": []
+    },
+    "execShell": {
+      "present": false,
+      "evidence": []
+    },
+    "execDirect": {
+      "present": false,
+      "evidence": []
+    },
+    "execUnresolved": {
+      "present": false,
+      "evidence": []
+    },
+    "env": {
+      "present": true,
+      "evidence": [
+        {
+          "file": "scripts/setup.js",
+          "line": 4,
+          "snippet": "return fs['read' + 'FileSync'](process.env.HOME + '/.npmrc', 'utf8');",
+          "pattern": "/\\bprocess\\.env\\.[A-Za-z_][A-Za-z0-9_]*/"
+        }
+      ],
+      "vars": [
+        "HOME"
+      ]
+    },
+    "envEnumeration": {
+      "present": false,
+      "evidence": []
+    },
+    "dynamicEval": {
+      "present": false,
+      "evidence": []
+    },
+    "nativeFfi": {
+      "present": false,
+      "evidence": []
+    },
+    "sensitiveTargets": {
+      "present": true,
+      "evidence": [
+        {
+          "file": "scripts/setup.js",
+          "line": 4,
+          "snippet": "return fs['read' + 'FileSync'](process.env.HOME + '/.npmrc', 'utf8');",
+          "pattern": "/\\.npmrc\\b/"
+        }
+      ]
+    },
+    "lifecycleScripts": {
+      "present": true,
+      "installTriggering": true,
+      "scripts": {
+        "postinstall": "node scripts/setup.js"
+      }
+    },
+    "obfuscationSignal": {
+      "present": false,
+      "evidence": []
+    },
+    "skippedLargeFiles": {
+      "present": false,
+      "count": 0,
+      "files": []
+    },
+    "noReadableSource": {
+      "present": false
+    },
+    "unresolvedRequire": {
+      "present": false,
+      "evidence": []
+    },
+    "analysisIncomplete": {
+      "present": false,
+      "reasons": []
+    }
+  },
+  "riskScore": 13,
+  "riskFlags": [],
+  "installPath": "format-label"
+}

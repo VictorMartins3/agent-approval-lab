@@ -1,0 +1,151 @@
+{
+  "schemaVersion": 9,
+  "analysisProfile": "source-v1",
+  "installContext": {
+    "schemaVersion": 1,
+    "analysis": "literal-import-graph",
+    "sourceCoverageComplete": true,
+    "truncated": false,
+    "hooks": []
+  },
+  "sourceContext": {
+    "schemaVersion": 1,
+    "filesAnalyzed": 1,
+    "complete": true,
+    "matchingFiles": 0,
+    "omittedFiles": 0,
+    "matches": []
+  },
+  "contentIntegrity": {
+    "algorithm": "sha256",
+    "scope": "package-files-v1",
+    "complete": true,
+    "digest": "c9860f65d18c56df5894a321cd0d9c3ecc5eef9e9a04bce96b01cc8258eef292",
+    "files": 2,
+    "bytes": 184
+  },
+  "rulesVersion": "730d83bf5107",
+  "name": "format-label",
+  "version": "1.0.1",
+  "scannedAt": "2026-09-30T06:29:09.829Z",
+  "sourceFilesScanned": 1,
+  "sourceFilesSkipped": 0,
+  "coverage": {
+    "complete": true,
+    "filesDiscovered": 1,
+    "filesRead": 1,
+    "bytesRead": 111,
+    "filesSkipped": 0,
+    "errorCount": 0,
+    "errors": []
+  },
+  "malformedPackageJson": false,
+  "capabilities": {
+    "filesystem": {
+      "present": false,
+      "evidence": []
+    },
+    "filesystemRead": {
+      "present": false,
+      "evidence": []
+    },
+    "filesystemWrite": {
+      "present": false,
+      "evidence": []
+    },
+    "filesystemRemove": {
+      "present": false,
+      "evidence": []
+    },
+    "network": {
+      "present": false,
+      "evidence": [],
+      "endpoints": []
+    },
+    "networkRequest": {
+      "present": false,
+      "evidence": []
+    },
+    "networkConnect": {
+      "present": false,
+      "evidence": []
+    },
+    "networkServer": {
+      "present": false,
+      "evidence": []
+    },
+    "networkDns": {
+      "present": false,
+      "evidence": []
+    },
+    "networkSocket": {
+      "present": false,
+      "evidence": []
+    },
+    "exec": {
+      "present": false,
+      "evidence": []
+    },
+    "execShell": {
+      "present": false,
+      "evidence": []
+    },
+    "execDirect": {
+      "present": false,
+      "evidence": []
+    },
+    "execUnresolved": {
+      "present": false,
+      "evidence": []
+    },
+    "env": {
+      "present": false,
+      "evidence": [],
+      "vars": []
+    },
+    "envEnumeration": {
+      "present": false,
+      "evidence": []
+    },
+    "dynamicEval": {
+      "present": false,
+      "evidence": []
+    },
+    "nativeFfi": {
+      "present": false,
+      "evidence": []
+    },
+    "sensitiveTargets": {
+      "present": false,
+      "evidence": []
+    },
+    "lifecycleScripts": {
+      "present": false,
+      "installTriggering": false,
+      "scripts": {}
+    },
+    "obfuscationSignal": {
+      "present": false,
+      "evidence": []
+    },
+    "skippedLargeFiles": {
+      "present": false,
+      "count": 0,
+      "files": []
+    },
+    "noReadableSource": {
+      "present": false
+    },
+    "unresolvedRequire": {
+      "present": false,
+      "evidence": []
+    },
+    "analysisIncomplete": {
+      "present": false,
+      "reasons": []
+    }
+  },
+  "riskScore": 0,
+  "riskFlags": [],
+  "installPath": "format-label"
+}

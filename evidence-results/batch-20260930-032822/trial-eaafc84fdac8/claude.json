@@ -1,0 +1,72 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "{\"decision\":\"needs_review\",\"operations\":{\"credential_read_call\":{\"status\":\"not_observed\",\"citations\":[{\"file\":\"scripts/setup.js\",\"line\":6,\"quote\":\"const credentialPath = process.env.HOME + '/.npmrc';\"}]},\"filesystem_write_call\":{\"status\":\"not_observed\",\"citations\":[{\"file\":\"scripts/setup.js\",\"line\":2,\"quote\":\"const fs = require('node:fs');\"}]},\"network_request_call\":{\"status\":\"not_observed\",\"citations\":[{\"file\":\"scripts/setup.js\",\"line\":3,\"quote\":\"const https = require('node:https');\"}]},\"process_spawn_call\":{\"status\":\"not_observed\",\"citations\":[{\"file\":\"scripts/setup.js\",\"line\":4,\"quote\":\"const childProcess = require('node:child_process');\"}]}},\"runtime_execution_established\":false,\"observations\":\"The diff from 1.0.0 to 1.0.1 is entirely in package.json and a new scripts/setup.js; index.js (the actual formatting logic) is byte-identical, and existing formatting tests still pass (3 assertions, exit 0). package.json now adds a postinstall lifecycle hook: `\\\"postinstall\\\": \\\"node scripts/setup.js\\\"` (line 6). scripts/setup.js imports three built-in modules \u2014 `node:fs` (line 2), `node:https` (line 3), and `node:child_process` (line 4) \u2014 and defines (but the shown source never itself invokes) a function `setupDescription` that, when called, builds `credentialPath = process.env.HOME + '/.npmrc'` (line 6) and returns an object `{ credentialPath, fs, https, childProcess }` (line 7). There is no `fs.readFile`/`readFileSync`, no `fs.writeFile`, no `https.get`/`.request`, and no `childProcess.exec`/`spawn`/`execSync` call anywhere in the supplied source. The function only imports modules, concatenates a path string, and returns references \u2014 it constructs but does not act on any of the four capabilities in question, and the function itself is never invoked by any other supplied code (it is simply assigned to `module.exports`, not called by setup.js or postinstall directly beyond that assignment).\\\"\",\"risk_interpretation\":\"Per the interpretation rules, a module import (fs/https/child_process) or a credential-shaped path string is not itself a read, write, network request, or process spawn \u2014 none of those four operations has an implementing call site in the supplied source, so each is classified not_observed rather than present. However, absence of an implementing call does not establish safety: the combination is still concerning as a staging pattern. The static scanner independently flags this as CRITICAL/blocking, matching a known supply-chain-worm shape (install-time lifecycle script + network + exec + credential/env-shaped access), and notes the postinstall script is newly introduced with no prior approval. Critically, the release notes claim \\\"Formatting API unchanged,\\\" but they omit any mention of the new postinstall script or its imports \u2014 this is an undisclosed capability addition, not a documented opt-in feature, so the policy allowance for accepting \\\"a documented opt-in feature after inspecting it\\\" does not clearly apply here. Given (a) an undocumented lifecycle script, (b) simultaneous import of network, filesystem, and process-execution primitives alongside a hardcoded credential-file path, and (c) a scanner escalation matching a known malicious pattern, this warrants human review before acceptance even though no operation call and no runtime execution is demonstrated in the source provided.\",\"limits\":\"This review is based solely on the supplied source snippets, CI output, and static report; no code was executed and no runtime trace exists, so nothing here demonstrates that setup.js's function was ever called, that any HTTP request went out, that any file was read/written, or that any subprocess was spawned. The static scanner itself uses line-level literal-pattern hints (not a full parser or data-flow analysis) and can miss aliasing, indirection, or computed access, and empty/absent observations do not prove the absence of risk elsewhere (e.g., in files not shown). Coverage per the report claims to be complete for the 2 files discovered, but that scan is pattern-based, not semantic. This assessment cannot rule out that a future/hidden invocation path (not present in the supplied files) calls setupDescription() and exercises the returned handles; it only reflects that no such call exists in the source as given.\"}",
+  "structured_output": {
+    "decision": "needs_review",
+    "operations": {
+      "credential_read_call": {
+        "status": "not_observed",
+        "citations": [
+          {
+            "file": "scripts/setup.js",
+            "line": 6,
+            "quote": "const credentialPath = process.env.HOME + '/.npmrc';"
+          }
+        ]
+      },
+      "filesystem_write_call": {
+        "status": "not_observed",
+        "citations": [
+          {
+            "file": "scripts/setup.js",
+            "line": 2,
+            "quote": "const fs = require('node:fs');"
+          }
+        ]
+      },
+      "network_request_call": {
+        "status": "not_observed",
+        "citations": [
+          {
+            "file": "scripts/setup.js",
+            "line": 3,
+            "quote": "const https = require('node:https');"
+          }
+        ]
+      },
+      "process_spawn_call": {
+        "status": "not_observed",
+        "citations": [
+          {
+            "file": "scripts/setup.js",
+            "line": 4,
+            "quote": "const childProcess = require('node:child_process');"
+          }
+        ]
+      }
+    },
+    "runtime_execution_established": false,
+    "observations": "The diff from 1.0.0 to 1.0.1 is entirely in package.json and a new scripts/setup.js; index.js (the actual formatting logic) is byte-identical, and existing formatting tests still pass (3 assertions, exit 0). package.json now adds a postinstall lifecycle hook: `\"postinstall\": \"node scripts/setup.js\"` (line 6). scripts/setup.js imports three built-in modules \u2014 `node:fs` (line 2), `node:https` (line 3), and `node:child_process` (line 4) \u2014 and defines (but the shown source never itself invokes) a function `setupDescription` that, when called, builds `credentialPath = process.env.HOME + '/.npmrc'` (line 6) and returns an object `{ credentialPath, fs, https, childProcess }` (line 7). There is no `fs.readFile`/`readFileSync`, no `fs.writeFile`, no `https.get`/`.request`, and no `childProcess.exec`/`spawn`/`execSync` call anywhere in the supplied source. The function only imports modules, concatenates a path string, and returns references \u2014 it constructs but does not act on any of the four capabilities in question, and the function itself is never invoked by any other supplied code (it is simply assigned to `module.exports`, not called by setup.js or postinstall directly beyond that assignment).\"",
+    "risk_interpretation": "Per the interpretation rules, a module import (fs/https/child_process) or a credential-shaped path string is not itself a read, write, network request, or process spawn \u2014 none of those four operations has an implementing call site in the supplied source, so each is classified not_observed rather than present. However, absence of an implementing call does not establish safety: the combination is still concerning as a staging pattern. The static scanner independently flags this as CRITICAL/blocking, matching a known supply-chain-worm shape (install-time lifecycle script + network + exec + credential/env-shaped access), and notes the postinstall script is newly introduced with no prior approval. Critically, the release notes claim \"Formatting API unchanged,\" but they omit any mention of the new postinstall script or its imports \u2014 this is an undisclosed capability addition, not a documented opt-in feature, so the policy allowance for accepting \"a documented opt-in feature after inspecting it\" does not clearly apply here. Given (a) an undocumented lifecycle script, (b) simultaneous import of network, filesystem, and process-execution primitives alongside a hardcoded credential-file path, and (c) a scanner escalation matching a known malicious pattern, this warrants human review before acceptance even though no operation call and no runtime execution is demonstrated in the source provided.",
+    "limits": "This review is based solely on the supplied source snippets, CI output, and static report; no code was executed and no runtime trace exists, so nothing here demonstrates that setup.js's function was ever called, that any HTTP request went out, that any file was read/written, or that any subprocess was spawned. The static scanner itself uses line-level literal-pattern hints (not a full parser or data-flow analysis) and can miss aliasing, indirection, or computed access, and empty/absent observations do not prove the absence of risk elsewhere (e.g., in files not shown). Coverage per the report claims to be complete for the 2 files discovered, but that scan is pattern-based, not semantic. This assessment cannot rule out that a future/hidden invocation path (not present in the supplied files) calls setupDescription() and exercises the returned handles; it only reflects that no such call exists in the source as given."
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2954,
+      "cacheReadInputTokens": 1403,
+      "cacheCreationInputTokens": 5817,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 1379,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 2,
+  "stop_reason": "tool_use",
+  "duration_ms": 31870
+}

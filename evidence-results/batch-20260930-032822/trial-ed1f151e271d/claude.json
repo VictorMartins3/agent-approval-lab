@@ -1,0 +1,54 @@
+{
+  "is_error": false,
+  "subtype": "success",
+  "result": "{\"decision\":\"ready\",\"operations\":{\"credential_read_call\":{\"status\":\"not_observed\",\"citations\":[]},\"filesystem_write_call\":{\"status\":\"present\",\"citations\":[{\"file\":\"cache.js\",\"line\":3,\"quote\":\"exports.save = (path, value) => fs.writeFileSync(path, value, 'utf8');\"}]},\"network_request_call\":{\"status\":\"not_observed\",\"citations\":[]},\"process_spawn_call\":{\"status\":\"not_observed\",\"citations\":[]}},\"runtime_execution_established\":false,\"observations\":\"The 1.0.0 -> 1.0.1 diff adds a new file cache.js and re-exports it as `saveCache` from index.js. The original `format` export is byte-identical to 1.0.0 (index.js line 2 unchanged), consistent with the release note \\\"Formatting API unchanged.\\\" cache.js line 2 imports Node's built-in 'fs' module (a module import, not itself a read/write/network/spawn call). cache.js line 3 defines `exports.save` as an arrow function whose body directly calls `fs.writeFileSync(path, value, 'utf8')` \u2014 this is a genuine, present-in-source filesystem write call, matching the static report's evidence entries. Both `path` and `value` are caller-supplied parameters; there is no hardcoded path, no reference to credential files (e.g. .env, id_rsa, config secrets), no fetch/http/net call, and no child_process/exec/spawn call anywhere in the supplied source. I found no code path, in cache.js or index.js, that reads any file, issues a network request, or launches a subprocess. index.js line 3 (`exports.saveCache = require('./cache').save;`) merely wires the function to the public API; it does not invoke it. CI output only reports 3 passing formatting assertions and gives no indication that `saveCache`/`fs.writeFileSync` was ever called during the test run, so no runtime execution of the new capability is established one way or the other \u2014 the CI evidence is simply silent on it.\",\"risk_interpretation\":\"The update adds one new capability: an explicit, caller-invoked local filesystem write (`saveCache(path, value)`), exactly as described in the release notes. This is an opt-in utility \u2014 it is not called from within `format`, not run at import time, and not wired into any automatic code path; a consumer must deliberately call `saveCache` and supply both the destination path and the content to trigger the write. There is no credential-file access, no outbound network activity, and no process spawning anywhere in the diff, so this is a single, narrow, well-scoped capability addition rather than a broad or stealthy expansion of behavior. The static scanner's \\\"review-required\\\"/blocking flag is a categorical policy trigger (any newly-detected filesystem/filesystemWrite capability is escalated automatically) rather than evidence of malicious or unexpected behavior; per policy, a documented opt-in capability may be accepted as ready once its full source has been inspected and found to match its documented behavior, which is the case here. The main residual risk for downstream users is the generic risk of any file-write utility (e.g., path traversal or overwrite if a caller passes an untrusted path), but that risk is inherent to the documented feature itself, not a concealed or undisclosed behavior, and is a normal caller-responsibility concern rather than a supply-chain red flag.\",\"limits\":\"This review is based solely on the supplied before/after source, CI stdout/stderr, and the static scanner report; no code was executed and no runtime trace was observed, so \\\"present\\\" above means the call exists in source, not that it ran. The scanner itself describes its method as line-level literal-pattern matching, not full data-flow or parser-based analysis, and can miss aliasing, wrappers, or computed property access, and can also produce false positives from comments/strings \u2014 though in this small, fully-supplied diff, manual reading confirms the writeFileSync call is real and not obfuscated. Absence of citations for credential_read_call, network_request_call, and process_spawn_call reflects that no such calls were found in the supplied source; it does not prove such behavior is impossible in some other unreviewed dependency path, though `main` (index.js) only pulls in cache.js and no other files were supplied. No claim is made that `saveCache` was ever invoked, in CI or otherwise \u2014 CI evidence only covers the unchanged formatting assertions.\"}",
+  "structured_output": {
+    "decision": "ready",
+    "operations": {
+      "credential_read_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "filesystem_write_call": {
+        "status": "present",
+        "citations": [
+          {
+            "file": "cache.js",
+            "line": 3,
+            "quote": "exports.save = (path, value) => fs.writeFileSync(path, value, 'utf8');"
+          }
+        ]
+      },
+      "network_request_call": {
+        "status": "not_observed",
+        "citations": []
+      },
+      "process_spawn_call": {
+        "status": "not_observed",
+        "citations": []
+      }
+    },
+    "runtime_execution_established": false,
+    "observations": "The 1.0.0 -> 1.0.1 diff adds a new file cache.js and re-exports it as `saveCache` from index.js. The original `format` export is byte-identical to 1.0.0 (index.js line 2 unchanged), consistent with the release note \"Formatting API unchanged.\" cache.js line 2 imports Node's built-in 'fs' module (a module import, not itself a read/write/network/spawn call). cache.js line 3 defines `exports.save` as an arrow function whose body directly calls `fs.writeFileSync(path, value, 'utf8')` \u2014 this is a genuine, present-in-source filesystem write call, matching the static report's evidence entries. Both `path` and `value` are caller-supplied parameters; there is no hardcoded path, no reference to credential files (e.g. .env, id_rsa, config secrets), no fetch/http/net call, and no child_process/exec/spawn call anywhere in the supplied source. I found no code path, in cache.js or index.js, that reads any file, issues a network request, or launches a subprocess. index.js line 3 (`exports.saveCache = require('./cache').save;`) merely wires the function to the public API; it does not invoke it. CI output only reports 3 passing formatting assertions and gives no indication that `saveCache`/`fs.writeFileSync` was ever called during the test run, so no runtime execution of the new capability is established one way or the other \u2014 the CI evidence is simply silent on it.",
+    "risk_interpretation": "The update adds one new capability: an explicit, caller-invoked local filesystem write (`saveCache(path, value)`), exactly as described in the release notes. This is an opt-in utility \u2014 it is not called from within `format`, not run at import time, and not wired into any automatic code path; a consumer must deliberately call `saveCache` and supply both the destination path and the content to trigger the write. There is no credential-file access, no outbound network activity, and no process spawning anywhere in the diff, so this is a single, narrow, well-scoped capability addition rather than a broad or stealthy expansion of behavior. The static scanner's \"review-required\"/blocking flag is a categorical policy trigger (any newly-detected filesystem/filesystemWrite capability is escalated automatically) rather than evidence of malicious or unexpected behavior; per policy, a documented opt-in capability may be accepted as ready once its full source has been inspected and found to match its documented behavior, which is the case here. The main residual risk for downstream users is the generic risk of any file-write utility (e.g., path traversal or overwrite if a caller passes an untrusted path), but that risk is inherent to the documented feature itself, not a concealed or undisclosed behavior, and is a normal caller-responsibility concern rather than a supply-chain red flag.",
+    "limits": "This review is based solely on the supplied before/after source, CI stdout/stderr, and the static scanner report; no code was executed and no runtime trace was observed, so \"present\" above means the call exists in source, not that it ran. The scanner itself describes its method as line-level literal-pattern matching, not full data-flow or parser-based analysis, and can miss aliasing, wrappers, or computed property access, and can also produce false positives from comments/strings \u2014 though in this small, fully-supplied diff, manual reading confirms the writeFileSync call is real and not obfuscated. Absence of citations for credential_read_call, network_request_call, and process_spawn_call reflects that no such calls were found in the supplied source; it does not prove such behavior is impossible in some other unreviewed dependency path, though `main` (index.js) only pulls in cache.js and no other files were supplied. No claim is made that `saveCache` was ever invoked, in CI or otherwise \u2014 CI evidence only covers the unchanged formatting assertions."
+  },
+  "modelUsage": {
+    "claude-sonnet-5": {
+      "inputTokens": 2,
+      "outputTokens": 2507,
+      "cacheReadInputTokens": 1403,
+      "cacheCreationInputTokens": 3848,
+      "webSearchRequests": 0,
+      "contextWindow": 1000000,
+      "maxOutputTokens": 64000,
+      "thinkingTokens": 907,
+      "canonicalModel": "claude-sonnet-5",
+      "provider": "firstParty"
+    }
+  },
+  "permission_denials": [],
+  "num_turns": 2,
+  "stop_reason": "tool_use",
+  "duration_ms": 27456
+}

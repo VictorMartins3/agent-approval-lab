@@ -1,0 +1,16 @@
+{
+  "name": "agent-approval-lab",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A controlled experiment on dependency review evidence and agent approval authority",
+  "scripts": {
+    "test": "python3 -m unittest discover -s tests -v",
+    "demo": "python3 lab.py controls",
+    "experiment": "python3 lab.py run --repeats 3",
+    "report": "python3 lab.py report",
+    "verify:results": "python3 verify_results.py",
+    "page": "python3 build_page.py",
+    "experiment:evidence": "python3 evidence_eval.py run --repeats 3 --jobs 3",
+    "report:evidence": "python3 evidence_eval.py report && python3 verify_evidence_results.py && python3 build_evidence_page.py"
+  }
+}

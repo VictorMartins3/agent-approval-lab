@@ -1,0 +1,1 @@
+Adds optional saveCache(path, value) for caller-selected local output. Formatting API unchanged.

@@ -1,0 +1,281 @@
+{
+  "verified_trials": 30,
+  "complete": 30,
+  "models": [
+    "claude-sonnet-5"
+  ],
+  "scoring_scope": "structured fields only; prose requires separate review",
+  "citation_normalization": "Post-hoc diagnostic: only leading/trailing whitespace is repaired; original scores are unchanged.",
+  "citation_audit": [
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-0411dc67ef82",
+      "case": "legitimate",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-059e32733e43",
+      "case": "routine",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-062db863fdcf",
+      "case": "computed_read",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-0f8051fba8b9",
+      "case": "routine",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-2ad20b37dfc0",
+      "case": "computed_read",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-2b786cbbda94",
+      "case": "suspicious",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-36d92a8789e9",
+      "case": "routine",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-40eed529295f",
+      "case": "direct_read",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-5b09ac2b8144",
+      "case": "legitimate",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-6da7f5780432",
+      "case": "routine",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-7575dc48b157",
+      "case": "suspicious",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-772dc91b4289",
+      "case": "direct_read",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-7c7e7b764ecd",
+      "case": "legitimate",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-8dc24c6064d9",
+      "case": "computed_read",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-95242da174f9",
+      "case": "legitimate",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-961c888bbd91",
+      "case": "computed_read",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-bd754f639ffa",
+      "case": "suspicious",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-c7f6166a86bc",
+      "case": "direct_read",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-cf87a6582411",
+      "case": "computed_read",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-d094cd60713c",
+      "case": "legitimate",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-d16270cd1aa7",
+      "case": "suspicious",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-d1810e496506",
+      "case": "routine",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-d667fdb87771",
+      "case": "direct_read",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-de1c214a87dc",
+      "case": "computed_read",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-de22ec88d800",
+      "case": "routine",
+      "arm": "current",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-e35b66114046",
+      "case": "direct_read",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-e4d39ddbe867",
+      "case": "direct_read",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-e98ab9e8cce1",
+      "case": "suspicious",
+      "arm": "current",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-eaafc84fdac8",
+      "case": "suspicious",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 1,
+      "whitespace_repairs": 1,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    },
+    {
+      "run": "evidence-results/batch-20260930-032822/trial-ed1f151e271d",
+      "case": "legitimate",
+      "arm": "evidence_linked",
+      "strict_citation_errors": 0,
+      "whitespace_repairs": 0,
+      "remaining_citation_errors": 0,
+      "normalized_unsupported_positive_claims": []
+    }
+  ]
+}
